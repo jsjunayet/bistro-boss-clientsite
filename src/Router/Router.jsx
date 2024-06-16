@@ -23,6 +23,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
 import AdminHome from "../pages/Dashboard/AdminHome";
 import MangeBoking from "../pages/Dashboard/Admin/MangeBoking";
 import AdminRoutes from "../pages/Dashboard/Admin/AdminRoutes";
+import Card from "../pages/Card/Card";
 
 const Router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const Router = createBrowserRouter([
             {
                 path: '/shop',
                 element: <Shop></Shop>
+            },
+            {
+                path: '/card',
+                element: <Card></Card>
             },
             {
                 path: '/login',
@@ -115,7 +120,7 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/update/:id',
                 element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
-                loader: ({ params }) => fetch(`https://final-project-back-six.vercel.app/menu/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
             },
             {
                 path: 'dashboard/booking',

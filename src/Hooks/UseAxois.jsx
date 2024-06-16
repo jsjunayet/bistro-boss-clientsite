@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosSecure = axios.create({
-    baseURL: 'https://final-project-back-six.vercel.app',
+    baseURL: 'http://localhost:5000',
 })
 const UseAxois = () => {
     axiosSecure.interceptors.request.use(function (config) {

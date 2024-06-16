@@ -54,7 +54,7 @@ const Navber = ({ Children }) => {
                 Shop
             </NavLink>
             <Link>
-                <Link to={'/dashboard/mycart'} className=" flex items-center">
+                <Link to={'/card'} className=" flex items-center">
                     <FaCartShopping className="text-3xl text-whie" />
                     <div className="badge badge-secondary">{card.length}</div>
                 </Link>

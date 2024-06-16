@@ -14,6 +14,7 @@ const Shop = () => {
     const initailze = catagoryes.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initailze);
     const [menu] = useMenu()
+    console.log(menu)
 
     const desserts = menu.filter((item) => item.category == 'dessert')
     const pizzas = menu.filter((item) => item.category == 'pizza')

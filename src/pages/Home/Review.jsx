@@ -12,7 +12,7 @@ const Review = () => {
     const [reviews, setreviews] = useState([])
     const [rating, setRating] = useState(0)
     useEffect(() => {
-        fetch('https://final-project-back-six.vercel.app/review')
+        fetch('http://localhost:5000/review')
             .then(res => res.json())
             .then(data => {
                 setreviews(data)
