@@ -1,14 +1,140 @@
+import { useState } from "react";
 import UseCardItem from "../../Hooks/UseCarditem/UseCardItem";
+import { Link } from 'react-router-dom';
 
+const Cart = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [card, refetch] = UseCardItem();
 
-const Card = () => {
-    const [card, refetch] = UseCardItem()
-    console.log(card)
-    return (
-        <div className="mt-20">
-            <h1>this is card section</h1>
+  // Function to handle quantity change
+  const handleQuantityChange = (index, newQuantity) => {
+    const newCard = [...card];
+    newCard[index].quantity = newQuantity;
+    refetch(newCard);
+  };
+
+  // Function to calculate total price
+  const totalPrice = card.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Order placed! Confirmation will be sent to ${email}.`);
+  };
+
+  // Render if cart is empty
+  if (card.length === 0) {
+    return <div className="container mx-auto mt-10 p-5 bg-white h-screen flex justify-center items-center shadow-lg">Your cart is empty. Please add items from our menu.</div>;
+  }
+
+  // Render cart and checkout form
+  return (
+    <div className="mt-24">
+      <div className={`container mx-auto grid ${card.length <= 3 ? "" : "grid-cols-8"} gap-5 mt-10 p-5 bg-white shadow-lg`}>
+        <div className={`${card.length <= 3 ? "" : "col-span-5"}`}>
+          <h1 className="text-3xl font-bold mb-6">Cart</h1>
+          <div className={`grid gap-3 mb-6 ${card.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
+            {card.map((item, index) => (
+              <div key={index} className="flex justify-between items-center bg-gray-100 p-5 rounded">
+                <div className="flex items-center">
+                  <img className="w-20 h-20 object-cover mr-4" src={item.image} alt={item.name} />
+                  <div>
+                    <h2 className="text-xl font-bold">{item.name}</h2>
+                    <div className="flex items-center gap-2">
+                      <label className="text-gray-700" htmlFor={`quantity-${index}`}>Quantity:</label>
+                      <input
+                        className="w-16 p-1 border border-gray-300 rounded"
+                        type="number"
+                        id={`quantity-${index}`}
+                        value={item.quantity} // Default to 1 if quantity is not set
+                        min="1"
+                        onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
+                      />
+                    </div>
+                    <p className="text-gray-700">${item.price.toFixed(2)} each</p>
+                  </div>
+                </div>
+                <div className="text-red-600 text-2xl">${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+              </div>
+            ))}
+          </div>
         </div>
-    );
+        <div className={`${card.length <= 3 ? "" : "col-span-3"}`}>
+          <div className="container mx-auto px-5 bg-white shadow-lg">
+            <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="name">Name:</label>
+                <input
+                  className="w-full p-2 border border-gray-300 rounded"
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="email">Email:</label>
+                <input
+                  className="w-full p-2 border border-gray-300 rounded"
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="phone">Phone Number:</label>
+                <input
+                  className="w-full p-2 border border-gray-300 rounded"
+                  type="tel"
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="address">Address:</label>
+                <input
+                  className="w-full p-2 border border-gray-300 rounded"
+                  type="text"
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="postalCode">Postal Code:</label>
+                <input
+                  className="w-full p-2 border border-gray-300 rounded"
+                  type="text"
+                  id="postalCode"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="text-2xl text-red-600 mb-4">Total: ${totalPrice.toFixed(2)}</div>
+              <button
+                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700"
+                type="submit"
+              >
+                Process Pay Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Card;
+export default Cart;
