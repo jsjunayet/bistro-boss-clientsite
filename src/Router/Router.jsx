@@ -24,6 +24,7 @@ import AdminHome from "../pages/Dashboard/AdminHome";
 import MangeBoking from "../pages/Dashboard/Admin/MangeBoking";
 import AdminRoutes from "../pages/Dashboard/Admin/AdminRoutes";
 import Card from "../pages/Card/Card";
+import PaymentSuccess from "../pages/paymentSuccess";
 
 const Router = createBrowserRouter([
     {
@@ -52,6 +53,14 @@ const Router = createBrowserRouter([
             },
             {
                 path: '/card',
+                element: <Card></Card>
+            },
+            {
+                path: '/payment/success/:tran_id',
+                element: <PaymentSuccess></PaymentSuccess>
+            },
+            {
+                path: '',
                 element: <Card></Card>
             },
             {

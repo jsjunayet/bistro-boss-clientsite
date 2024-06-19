@@ -1,29 +1,59 @@
 import { useState } from "react";
 import UseCardItem from "../../Hooks/UseCarditem/UseCardItem";
 import { Link } from 'react-router-dom';
+import UseAuth from "../../Hooks/UseAuth";
+import { FaTrash } from "react-icons/fa";
+import UseAxois from "../../Hooks/UseAxois";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Cart = () => {
-  const [email, setEmail] = useState('');
+  const {user}=UseAuth()
+  const axiosSecure = UseAxois()
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [card, refetch] = UseCardItem();
+  const handledelte = (_id) => {
+    console.log(_id)
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axiosSecure.delete(`/card/${_id}`)
+                .then(res => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                    refetch()
+                })
+        }
+    });
+}
 
-  // Function to handle quantity change
-  const handleQuantityChange = (index, newQuantity) => {
-    const newCard = [...card];
-    newCard[index].quantity = newQuantity;
-    refetch(newCard);
-  };
 
   // Function to calculate total price
   const totalPrice = card.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    alert(`Order placed! Confirmation will be sent to ${email}.`);
+    const itemNames = card.map(item => item.name).join(', ');
+    
+    const Cards = {name, phone,address, date: new Date(), category: card.map(item => item?.name), postalCode, email:user.email,itemNames,cardId: card.map(item => item?._id),
+      menuID: card.map(item => item.menuID),
+      status: 'pending', price:totalPrice}
+    const res = await axios.post(`http://localhost:5000/order`,Cards);
+    window.location.replace(res.data.url)
   };
 
   // Render if cart is empty
@@ -44,21 +74,10 @@ const Cart = () => {
                   <img className="w-20 h-20 object-cover mr-4" src={item.image} alt={item.name} />
                   <div>
                     <h2 className="text-xl font-bold">{item.name}</h2>
-                    <div className="flex items-center gap-2">
-                      <label className="text-gray-700" htmlFor={`quantity-${index}`}>Quantity:</label>
-                      <input
-                        className="w-16 p-1 border border-gray-300 rounded"
-                        type="number"
-                        id={`quantity-${index}`}
-                        value={item.quantity} // Default to 1 if quantity is not set
-                        min="1"
-                        onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-                      />
-                    </div>
                     <p className="text-gray-700">${item.price.toFixed(2)} each</p>
                   </div>
                 </div>
-                <div className="text-red-600 text-2xl">${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+                <button onClick={() => handledelte(item._id)} className="text-red-600 text-2xl"><FaTrash className="text-2xl text-red-800"/></button>
               </div>
             ))}
           </div>
@@ -84,9 +103,7 @@ const Cart = () => {
                   className="w-full p-2 border border-gray-300 rounded"
                   type="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  value={user?.email}
                 />
               </div>
               <div className="mb-4">
@@ -133,7 +150,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </div>
+          </div>
   );
 };
 
