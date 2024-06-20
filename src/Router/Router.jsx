@@ -25,6 +25,8 @@ import MangeBoking from "../pages/Dashboard/Admin/MangeBoking";
 import AdminRoutes from "../pages/Dashboard/Admin/AdminRoutes";
 import Card from "../pages/Card/Card";
 import PaymentSuccess from "../pages/paymentSuccess";
+import Profile from "../pages/Profile";
+import PaymentFailed from "../pages/PaymentFailed";
 
 const Router = createBrowserRouter([
     {
@@ -56,8 +58,16 @@ const Router = createBrowserRouter([
                 element: <Card></Card>
             },
             {
+                path: '/profile',
+                element: <Profile></Profile>
+            },
+            {
                 path: '/payment/success/:tran_id',
                 element: <PaymentSuccess></PaymentSuccess>
+            },
+            {
+                path: '/payment/fail/:tran_id',
+                element: <PaymentFailed></PaymentFailed>
             },
             {
                 path: '',

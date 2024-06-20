@@ -53,6 +53,14 @@ const Navber = ({ Children }) => {
             >
                 Shop
             </NavLink>
+            <NavLink
+                to="/profile"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
+                }
+            >
+                Profile
+            </NavLink>
             <Link>
                 <Link to={'/card'} className=" flex items-center">
                     <FaCartShopping className="text-3xl text-whie" />
