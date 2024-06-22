@@ -7,7 +7,7 @@ import img from '../../src/assets/image/assets/home/placeholder.jpg'
 import { useQuery } from "@tanstack/react-query";
 import { axiosSecure } from "../Hooks/UseAxois";
 
-const Navber = ({ Children }) => {
+const Navbers = ({ Children }) => {
     const { user, logOut, tranID:tran_id } = UseAuth();
     const { data: selfuser = {} } = useQuery({
         queryKey: ['myemail', user?.email],
@@ -17,7 +17,6 @@ const Navber = ({ Children }) => {
 
         }
     })
-    console.log(selfuser)
     const [card] = UseCardItem()
     const handlesingout = () => {
         logOut()
@@ -103,7 +102,7 @@ const Navber = ({ Children }) => {
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content fixed z-40 w-full bg-[#15151599] opacity-100 flex flex-col">
                 {/* Navbar */}
-                <div className="navbar  max-w-7xl mx-auto">
+                <div className="navbar  max-w-[1200px] mx-auto">
                     <div className="flex-none lg:hidden">
                         <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -111,8 +110,8 @@ const Navber = ({ Children }) => {
                     </div>
                     <div className="flex-1 px-2 mx-2">
                         <div>
-                            <p className="text-3xl text-bold uppercase text-white ">BISTRO BOSS</p>
-                            <p className="tracking-[.55em] uppercase text-white">Restaurant</p>
+                            <p className="text-3xl text-bold uppercase text-white ">Online Food</p>
+                            <p className="tracking-[.80em] uppercase text-white">Restaurant</p>
                         </div>
                     </div>
                     <div className="flex-none hidden lg:block">
@@ -136,4 +135,4 @@ const Navber = ({ Children }) => {
     );
 };
 
-export default Navber;
+export default Navbers;

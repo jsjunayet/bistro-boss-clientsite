@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Navber from "./Navber";
 import Footer from "../pages/Footer";
+import Navbar from "../component/navbar/Navbar";
 
 const Main = () => {
     const location = useLocation()
@@ -9,7 +9,7 @@ const Main = () => {
     return (
         <div>
             {
-                navbarFotter || <Navber></Navber>
+                navbarFotter || <Navbar></Navbar>
             }
 
             <Outlet></Outlet>

@@ -1,3 +1,4 @@
+import Location from "../../component/Location";
 import Title from "../../share/Title";
 import Shop from "../Shop/Shop";
 import Bannar from "./Bannar";
@@ -13,6 +14,7 @@ const Home = () => {
             <Bannar></Bannar>
             <Category></Category>
             <Shop></Shop>
+            <Location></Location>
         </div>
 
 
