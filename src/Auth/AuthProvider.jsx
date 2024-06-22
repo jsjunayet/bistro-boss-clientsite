@@ -6,6 +6,7 @@ import UseaxiosPublic from "../Hooks/UseaxiosPublic";
 export const AuthControl = createContext(null)
 const AuthProvider = ({ children }) => {
     const axiosPublic = UseaxiosPublic()
+    const [tranID, setTranID] = useState(null);
     const [user, setuser] = useState(null)
     const [loading, setloading] = useState(true)
     const signUp = (email, password) => {
@@ -58,7 +59,9 @@ const AuthProvider = ({ children }) => {
         loading,
         update,
         logOut,
-        googlelogin
+        googlelogin,
+        setTranID,
+        tranID
     }
     return (
         <AuthControl.Provider value={info} >

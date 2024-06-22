@@ -1,0 +1,25 @@
+.image_galary {
+    position: relative;
+    overflow: hidden;
+}
+
+.image_galary img {
+    transition: transform 0.3s ease;
+}
+
+.image_galary:hover img {
+    transform: scale(1.1);
+}
+
+.image_galary .info {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image_galary:hover .info {
+    opacity: 1;
+}
+
+.info h3.offer {
+    transition: opacity 0.3s ease;
+}

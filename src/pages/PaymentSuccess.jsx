@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import UseAuth from '../Hooks/UseAuth';
+
 const PaymentSuccess = () => {
-  const { tran_id } = useParams(); // Destructure tran_id directly
+  const { tran_id } = useParams();
+  const {setTranID}=UseAuth()
+  setTranID(tran_id)
+   // Destructure tran_id directly
   const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 import Title from "../../share/Title";
+import Shop from "../Shop/Shop";
 import Bannar from "./Bannar";
+import Category from "./categroy/Category";
 import OurSection from "./OurSection";
 import ParallaxSection from "./ParallaxSection";
 import Review from "./Review";
@@ -9,10 +11,8 @@ const Home = () => {
     return (
         <div>
             <Bannar></Bannar>
-            <SwipteSection></SwipteSection>
-            <OurSection></OurSection>
-            <ParallaxSection></ParallaxSection>
-            <Review></Review>
+            <Category></Category>
+            <Shop></Shop>
         </div>
 
 

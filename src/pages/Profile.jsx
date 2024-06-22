@@ -4,55 +4,51 @@ import Swal from "sweetalert2";
 import UseAuth from "../Hooks/UseAuth";
 import { useEffect, useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import UsePayment from "../Hooks/UsePayment";
 
 
 const Profile = () => {
     const {user}=UseAuth()
-    const [data, setdata] = useState(null);
-    console.log(data,user)
-    useEffect(() => {
-        const fetchOrderData = async () => {
-          try {
-            const res = await axios.get(`http://localhost:5000/payment/${user?.email}`);
-            setdata(res.data);
-          } catch (error) {
-            console.error('Error fetching order data:', error);
-          }
-        }
-        fetchOrderData();
-    },[])
+    const [paymentuser] = UsePayment()
+    console.log(paymentuser)
+   
 
 
-    // const total = data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.price),0);
+    const total = paymentuser.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.price),0);
     const columns = [
-        { field: 'number', headerName: 'Number', width: 120, padding: 5 },
-        { field: 'roomName', headerName: 'RoomName', width: 150 },
+        { field: 'number', headerName: 'Number', width: 100, padding: 5 },
+        { field: 'name', headerName: 'UserName', width: 150 },
+        { field: 'itemNames', headerName: 'ItemNames', width: 250 },
         { field: 'location', headerName: 'Location', width: 150 },
-        { field: 'startTime', headerName: 'StartTime', width: 150 },
-        { field: 'endTime', headerName: 'EndTime', width: 150 },
-        { field: 'duration', headerName: 'Duration', width: 150 },
-        { field: 'price', headerName: 'Price', width: 150 },
-        { field: 'roomNumber', headerName: 'RoomNumber', width: 150 },
+        { field: 'phone', headerName: 'Phone', width: 150 },
+        { field: 'date', headerName: 'Date', width: 100 },
+        { field: 'price', headerName: 'Price', width: 100 },
         {
-            field: 'action', headerName: 'Action', width: 150, renderCell: (params) => (
-                <MdFreeCancellation  className=' text-white text-4xl mt-2 cursor-pointer bg-red-800 rounded-md p-[1px]' />
+            field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
+                <p>pending</p>
             )
         },
+        {
+          field: 'action', headerName: 'Action', width: 100, renderCell: (params) => (
+              <MdFreeCancellation  className=' text-white text-4xl mt-2 cursor-pointer bg-red-800 rounded-md p-[1px]' />
+          )
+      },
     ];
 
-    // const rows = data.map((item, index) => ({
-    //     id: index + 1,
-    //     number: index + 1,
-    //     roomName: item.RoomName,
-    //     location: item.City,
-    //     startTime: item.startDate.substring(0, 10),
-    //     endTime: item.endDate.substring(0, 10),
-    //     duration: item.Duration,
-    //     price: item.price,
-    //     roomNumber: item.selectedRoomNumbers.join(', '),
-    //     action: 'Cancel',
-    //     _id: item._id,
-    // }));
+    const rows = paymentuser.map((item, index) => ({
+      
+        id: index + 1,
+        number: index + 1,
+        name: item.name,
+        itemNames: item.itemNames,
+        location: item.address,
+        phone:item?.phone,
+        date: item.date.substring(0, 10),
+        price: item.price,
+        action: 'Cancel',
+        status: 'status',
+        _id: item._id,
+    }));
 
    
 
@@ -60,7 +56,7 @@ const Profile = () => {
 
 
     return (
-        <div className={` h-screen mt-10`}>
+        <div className={`mt-10`}>
            
             <div>
     <div className='flex justify-center  items-center pt-20'>
@@ -100,10 +96,10 @@ const Profile = () => {
               <div>
               <p className='flex gap-1'>
                 Total Order : 
-                <span className='font-bold text-black '>{data?.length}</span>
+                <span className='font-bold text-black '>{paymentuser?.length}</span>
               </p>
               <p className='flex gap-1'>
-                Total Buy : 
+                Total Buy : <spam className="font-bold"> {total}</spam>
               </p>
               </div>
               <div>
@@ -122,9 +118,9 @@ const Profile = () => {
      </div>
          <div>
                     <div className={`mx-2 md:mx-0`}>
-                        <div className=' mt-10  max-w-5xl mx-auto z-10'>
-                            <div style={{ height: 400, width: '100%' }}>
-                                {/* <DataGrid
+                        <div className=' mt-10  max-w-[1240px] mx-auto z-10'>
+                            <div style={{ height: 500, width: '100%' }}>
+                                <DataGrid
                                     rows={rows}
                                     columns={columns}
                                     initialState={{
@@ -136,7 +132,7 @@ const Profile = () => {
                                     getRowClassName={(_, index) =>
                                         index % 4 === 0 ? 'bg-green-500' : 'bg-gray-300'
                                     }
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

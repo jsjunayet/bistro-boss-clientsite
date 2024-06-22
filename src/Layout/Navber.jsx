@@ -1,13 +1,23 @@
 
 import { Link, NavLink } from "react-router-dom";
-
 import UseAuth from "../Hooks/UseAuth";
 import UseCardItem from "../Hooks/UseCarditem/UseCardItem";
 import { FaCartShopping } from "react-icons/fa6";
 import img from '../../src/assets/image/assets/home/placeholder.jpg'
+import { useQuery } from "@tanstack/react-query";
+import { axiosSecure } from "../Hooks/UseAxois";
 
 const Navber = ({ Children }) => {
-    const { user, logOut } = UseAuth()
+    const { user, logOut, tranID:tran_id } = UseAuth();
+    const { data: selfuser = {} } = useQuery({
+        queryKey: ['myemail', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/selfuser?email=${user?.email}`)
+            return res.data
+
+        }
+    })
+    console.log(selfuser)
     const [card] = UseCardItem()
     const handlesingout = () => {
         logOut()
@@ -28,39 +38,26 @@ const Navber = ({ Children }) => {
             >
                 Home
             </NavLink>
-            <NavLink
-                to="/contact"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                }
-            >
-                contact us
+           {
+            user &&  <NavLink
+            to="/profile"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
+            }
+        >
+            Profile
             </NavLink>
-
-            <NavLink
-                to="/menu"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                }
-            >
-                Our menu
-            </NavLink>
-            <NavLink
-                to="/shop"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                }
-            >
-                Shop
-            </NavLink>
-            <NavLink
-                to="/profile"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                }
-            >
-                Profile
-            </NavLink>
+           }
+           {
+            selfuser.role === "admin" &&  <NavLink
+            to="/dashboard"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
+            }
+        >
+            dashboard
+        </NavLink>
+           }
             <Link>
                 <Link to={'/card'} className=" flex items-center">
                     <FaCartShopping className="text-3xl text-whie" />
@@ -88,14 +85,7 @@ const Navber = ({ Children }) => {
                     </li>
 
                     {
-                        user?.email ? <li> <NavLink
-                            to="/dashboard"
-                            className={({ isActive, isPending }) =>
-                                isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                            }
-                        >
-                            dashboard
-                        </NavLink>
+                        user?.email ? <li>
                             <Link onClick={handlesingout} >LogOut</Link> </li> :
                             <li><NavLink to="/login"
                                 className={({ isActive, isPending }) =>

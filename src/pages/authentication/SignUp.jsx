@@ -36,7 +36,8 @@ const SignUp = () => {
                         const userinfo = {
                             name: data.name,
                             img: img.data?.display_url,
-                            email: data.email
+                            email: data.email,
+                            role: "user"
                         }
                         //create user entry the database;
                         axiosPublic.post('/users', userinfo)
@@ -74,7 +75,8 @@ const SignUp = () => {
                 const userinfo = {
                     email: result.user?.email,
                     name: result.user?.displayName,
-                    img: result.user?.photoURL
+                    img: result.user?.photoURL,
+                    role: "user"
                 }
                 axiosSecure.post('/users', userinfo)
                     .then(res => {
