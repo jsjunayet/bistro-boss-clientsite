@@ -1,4 +1,5 @@
 import Location from "../../component/Location";
+import TopBar from "../../component/navbar/TopBar";
 import Title from "../../share/Title";
 import Shop from "../Shop/Shop";
 import Bannar from "./Bannar";

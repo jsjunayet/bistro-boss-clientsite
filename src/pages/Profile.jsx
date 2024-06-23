@@ -56,9 +56,9 @@ const Profile = () => {
 
 
     return (
-        <div className={`mt-10`}>
+    <div className={`pt-10 bg-white`}>
            
-            <div>
+    <div>
     <div className='flex justify-center  items-center pt-20'>
      
       <div className='bg-white shadow-lg rounded-2xl w-[75%]'>

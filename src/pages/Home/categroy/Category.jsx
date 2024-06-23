@@ -9,8 +9,8 @@ const Category = () => {
     const Drinks = menu.filter((item)=>item.category==="drinks")
     const salad = menu.filter((item)=>item.category==="salad")
     return (
-        <div>
-            <div className="max-w-6xl  mx-auto my-16">
+        <div className=" mx-2 md:mx-2">
+            <div className="max-w-6xl  mx-auto my-12">
                 <div className="flex flex-col md:grid grid-cols-1 gap-3 md:grid-cols-4 lg:grid-cols-4 md:row-span-2">
                     <div className="relative col-span-2 row-span-2 image_galary">
                         <img className="rounded-xl" src="https://i.ibb.co/zbJpPgW/cocktail-with-lemon-lime-strawberry-decoration-generative-ai.jpg" alt="Drinks" />

@@ -58,16 +58,16 @@ const Cart = () => {
 
   // Render if cart is empty
   if (card.length === 0) {
-    return <div className="container mx-auto mt-10 p-5 bg-white h-screen flex justify-center items-center shadow-lg">Your cart is empty. Please add items from our menu.</div>;
+    return <div className="container mx-auto mt-10 p-5  h-screen flex justify-center items-center shadow-lg">Your cart is empty. Please add items from our menu.</div>;
   }
 
   // Render cart and checkout form
   return (
-    <div className="mt-24">
-      <div className={`container mx-auto grid ${card.length <= 3 ? "" : "grid-cols-8"} gap-5 mt-10 p-5 bg-white shadow-lg`}>
+    <div className=" bg-white">
+      <div className={`container mx-auto grid ${card.length <= 3 ? "" : "md:grid-cols-8 grid-cols-1"} gap-5 mt-10 p-5 `}>
         <div className={`${card.length <= 3 ? "" : "col-span-5"}`}>
-          <h1 className="text-3xl font-bold mb-6">Cart</h1>
-          <div className={`grid gap-3 mb-6 ${card.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
+          <h1 className="text-3xl font-bold mb-6 pt-3">Add Cart</h1>
+          <div className={`grid gap-3 mb-6 ${card.length === 1 ? "grid-cols-1" : "md:grid-cols-2 grid-cols-1"}`}>
             {card.map((item, index) => (
               <div key={index} className="flex justify-between items-center bg-gray-100 p-5 rounded">
                 <div className="flex items-center">
@@ -82,9 +82,9 @@ const Cart = () => {
             ))}
           </div>
         </div>
-        <div className={`${card.length <= 3 ? "" : "col-span-3"}`}>
-          <div className="container mx-auto px-5 bg-white shadow-lg">
-            <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+        <div className={`${card.length <= 3 ? "" : "md:col-span-3 w-full"}`}>
+          <div className="w-full px-5 pb-3 bg-white shadow-lg">
+            <h1 className={`text-3xl font-bold mb-6 ${card.length <= 3 ? "" : "pt-3"}`}>Checkout</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2" htmlFor="name">Name:</label>
@@ -150,7 +150,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-          </div>
+    </div>
   );
 };
 

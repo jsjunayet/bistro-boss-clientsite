@@ -5,15 +5,15 @@ const Footer = () => {
         <footer className="  text-neutral-content">
             <div className="flex">
                 <aside className="bg-[#1F2937] space-y-2 py-10 w-1/2 flex flex-col items-center">
-                    <p className="text-2xl">CONTACT US</p>
-                    <p>123 ABS Street, Uni 21, Bangladesh</p>
-                    <p>+88 123456789</p>
-                    <p>+88 123456789</p>
-                    <p> Sat - Sun: 10:00 - 23:00</p>
+                    <p className="md:text-2xl text-xl">CONTACT US</p>
+                    <p className=" md:text-base text-sm">123, Kasba, Bangladesh</p>
+                    <p className=" md:text-base text-sm">+880 1640011818</p>
+                    <p className=" md:text-base text-sm">+880 1710834290</p>
+                    <p className=" md:text-base text-sm"> Sat - Sun: 10:00 - 23:00</p>
                 </aside>
                 <nav className="bg-[#111827] py-10 w-1/2 text-center space-y-3" >
-                    <p className="text-2xl">Follow US</p>
-                    <p>Join us on social media</p>
+                    <p className="md:text-2xl text-xl">Follow US</p>
+                    <p className=" md:text-base text-sm">Join us on social media</p>
 
                     <div className="flex justify-center gap-5">
 
@@ -24,8 +24,8 @@ const Footer = () => {
                 </nav>
             </div>
 
-            <div className="footer-center py-2 bg-black">
-                <p>Copyright © 2024 - All right reserved by ACME Industries Ltd</p>
+            <div className="footer-center py-2 bg-red-700">
+                <p>Copyright © 2024 - All right reserved by junayet Rastaurant</p>
             </div>
         </footer>
     );

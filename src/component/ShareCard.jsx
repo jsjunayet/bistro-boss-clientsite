@@ -46,7 +46,7 @@ const ShareCard = ({ item }) => {
     };
 
     return (
-        <div className="card bg-base-100 shadow-xl flex flex-col md:h-[500px]">
+        <div className="card mx-2   md:mx-0 bg-base-100 shadow-xl flex flex-col md:h-[500px]">
             <div className="overflow-hidden md:h-2/3">
                 <img src={image} alt={name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
             </div>
@@ -55,7 +55,7 @@ const ShareCard = ({ item }) => {
                 <p className="text-gray-700">{recipe}</p>
                 <div className="flex justify-between items-center mt-auto">
                     <p className="text-xl font-medium">Price: ${price}</p>
-                    <button onClick={() => handleCard(_id)} className="btn btn-outline text-[#BB8506] border-0 border-b-2 border-[#BB8506] hover:bg-black">
+                    <button onClick={() => handleCard(_id)} className="btn btn-outline text-red-700 border-0 border-b-2 border-red-700 hover:bg-black">
                         Add to cart
                     </button>
                 </div>
