@@ -6,6 +6,7 @@ import { FaTrash } from "react-icons/fa6";
 import { axiosSecure } from "../../../Hooks/UseAxois";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
 
 
 const ManageItem = () => {
@@ -49,8 +50,8 @@ const ManageItem = () => {
     };
     return (
         <div>
-            <div className="mt-10">
-                <Title heading={"---Hurry Up!---"} paragraph={"MANAGE ALL ITEMS"}></Title>
+            <div className="">
+                <DashboardNavbar></DashboardNavbar>
             </div>
             <div>
                 <p className="my-4 text-2xl font-semibold">Total items: {menu.length}</p>

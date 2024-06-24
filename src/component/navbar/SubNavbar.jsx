@@ -44,9 +44,9 @@ const SubNavbar = () => {
             title: "Profile",
             icon: <IoMdPerson />,
         },
-        user && user.role === "admin" && {
+         selfuser.role === "admin" && {
             id: 3,
-            path: "/dashbaord",
+            path: "dashboard/adminhome",
             title: "Dashboard",
             icon: <IoMdSpeedometer />
         }

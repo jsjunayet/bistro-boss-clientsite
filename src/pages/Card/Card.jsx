@@ -6,9 +6,11 @@ import { FaTrash } from "react-icons/fa";
 import UseAxois from "../../Hooks/UseAxois";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Cart = () => {
   const {user}=UseAuth()
+  const[loading, setloading]=useState(false)
   const axiosSecure = UseAxois()
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -16,6 +18,7 @@ const Cart = () => {
   const [postalCode, setPostalCode] = useState('');
   const [card, refetch] = UseCardItem();
   const handledelte = (_id) => {
+
     console.log(_id)
     Swal.fire({
         title: "Are you sure?",
@@ -39,13 +42,11 @@ const Cart = () => {
         }
     });
 }
-
-
   // Function to calculate total price
   const totalPrice = card.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
-
   // Function to handle form submission
   const handleSubmit = async(e) => {
+    setloading(true)
     e.preventDefault();
     const itemNames = card.map(item => item.name).join(', ');
     
@@ -54,13 +55,13 @@ const Cart = () => {
       status: 'pending', price:totalPrice}
     const res = await axios.post(`http://localhost:5000/order`,Cards);
     window.location.replace(res.data.url)
+    setloading(false)
   };
 
   // Render if cart is empty
   if (card.length === 0) {
     return <div className="container mx-auto mt-10 p-5  h-screen flex justify-center items-center shadow-lg">Your cart is empty. Please add items from our menu.</div>;
   }
-
   // Render cart and checkout form
   return (
     <div className=" bg-white">
@@ -140,11 +141,13 @@ const Cart = () => {
                 />
               </div>
               <div className="text-2xl text-red-600 mb-4">Total: ${totalPrice.toFixed(2)}</div>
-              <button
+              <button disabled={loading}
                 className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700"
                 type="submit"
               >
-                Process Pay Now
+                {
+                  loading?<TbFidgetSpinner className=' animate-spin mx-auto' />:'Process Pay Now'
+                }
               </button>
             </form>
           </div>

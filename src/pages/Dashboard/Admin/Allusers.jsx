@@ -1,105 +1,99 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useAxois from "../../../Hooks/UseAxois";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../../../Hooks/UseAxois";
 import { FaTrash, FaUser } from "react-icons/fa6";
+import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
+import { MdDelete } from "react-icons/md";
+import { DataGrid } from "@mui/x-data-grid";
 
-
-const Allusers = () => {
-    const axiosSecure = useAxois()
-    const queryClient = useQueryClient()
+const AllUsers = () => {
+    const axiosSecure = useAxios();
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
-            return res.data
+            return res.data;
         }
+    });
 
-    })
-    console.log(users)
-    const handledelte = (_id) => {
-        console.log(_id)
+    const rows = users.map((item, index) => ({
+        id: index + 1,
+        userId: item._id,  // Adding the actual user ID for API calls
+        number: index + 1,
+        name: item.name,
+        email: item.email,
+        role: item.role,
+    }));
+
+    const columns = [
+        { field: 'number', headerName: 'Number', width: 100, padding: 5, cellClassName:'text-white' },
+        { field: 'name', headerName: 'UserName', width: 200, cellClassName: 'text-white' },
+        { field: 'email', headerName: 'UserEmail', width: 350,cellClassName: 'text-white' },
+        {
+            field: 'admin', headerName: 'Admin', width: 200, renderCell: (params) => (
+                params.row.role === "admin" ? (
+                    <span className="text-white text-xs mt-3 cursor-pointer bg-[#333]  rounded-md px-3 py-2">ADMIN</span>
+                ) : (
+                    <button 
+                        type="button" 
+                        onClick={() => handleAdmin(params.row.userId)} 
+                    >
+                        <span className="text-white text-xs mt-3 cursor-pointer bg-[#f5adad]  rounded-md px-3 py-2" >USER</span>
+                    </button>
+                )
+            )
+        },
+        {
+            field: 'delete', headerName: 'Delete', width: 200, renderCell: (params) => (
+                <MdDelete 
+                    onClick={() => handleDelete(params.row.userId)} 
+                    className='text-white text-3xl mt-3 cursor-pointer bg-[#333]  rounded-md p-1' 
+                />
+            )
+        },
+    ];
+
+    const handleDelete = (_id) => {
         axiosSecure.delete(`/users/${_id}`)
             .then(res => {
                 if (res.data?.deletedCount > 0) {
-                    refetch()
+                    refetch();
                 }
             })
-
+            .catch(err => console.error(err));
     }
-    // const handleAdmin = (_id) => {
-    //     console.log('hello2', _id)
-    //     axiosSecure.patch(`/users/admin/${_id}`)
-    //         .then(res => {
-    //             console.log('hello', res.data)
-    //             refetch()
-    //         })
 
-    // }
     const handleAdmin = async (_id) => {
-        const res = await axiosSecure.patch(`/users/admin/${_id}`)
-        console.log(res)
-        refetch()
-
-
+        try {
+            const res = await axiosSecure.patch(`/users/admin/${_id}`);
+            console.log(res);
+            refetch();
+        } catch (err) {
+            console.error(err);
+        }
     }
-    // const handleAdmin = useMutation({
-    //     mutationFn: (_id) => {
-    //         return axiosSecure.patch(`/users/admin/${_id}`)
-    //     },
-    //     onSuccess: () => {
-    //         // ✅ refetch the comments list for our blog post
-    //         queryClient.invalidateQueries({
-    //             queryKey: ['users']
-    //         })
-    //     },
-    // })
+
     return (
         <div>
-            <div className="flex justify-around my-4">
-                <h1>All users</h1>
-                <h1>total users : {users?.length}</h1>
+            <DashboardNavbar />
+            <div className="font-semibold text-xl">
+                <h1 className="text-xl uppercase font-semibold my-2">Total Users: {users?.length}</h1>
             </div>
-            <div>
-                <div className="overflow-x-auto">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Roll</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* row 1 */}
-                            {
-                                users?.map((item, index) => <tr key={item._id}>
-                                    <th>{index + 1}</th>
-                                    <td>{item.name}</td>
-                                    <td>{item.email}</td>
-                                    <td>
-                                        {
-                                            item.role == "admin" ? 'Admin' :
-                                                <button type="button" onClick={() => handleAdmin(item._id)} className="btn btn-ghost btn-sm"><FaUser className="text-2xl text-red-800 bg-orange-600"></FaUser></button>
-                                        }
-                                    </td>
-                                    <td>
-                                        <button onClick={() => handledelte(item._id)} className="btn btn-ghost btn-sm"><FaTrash className="text-2xl text-red-800"></FaTrash></button>
-
-                                    </td>
-                                </tr>)
-                            }
-                            {/* row 2 */}
-
-                            {/* row 3 */}
-
-                        </tbody>
-                    </table>
+            <div className="bg-red-700 text-white p-4 rounded-lg">
+                <div style={{ height: 550, width: '100%' }}>
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 10 },
+                            },
+                        }}
+                        pageSizeOptions={[10, 20, 30, 40]}
+                    />
                 </div>
             </div>
         </div>
     );
 };
 
-export default Allusers;
+export default AllUsers;

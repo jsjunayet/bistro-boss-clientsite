@@ -4,6 +4,7 @@ import { FaBook, FaShop, FaUser } from "react-icons/fa6";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, PieChart, Pie, Sector, ResponsiveContainer, Legend } from 'recharts';
 
 import { BsCalendarEventFill } from "react-icons/bs";
+import DashboardNavbar from "./DashbaordComponent/DashboardNavbar";
 
 
 
@@ -17,7 +18,6 @@ const AdminHome = () => {
 
         }
     })
-    console.log(data)
     const { data: Alldatas = [] } = useQuery({
         queryKey: ['order'],
         queryFn: async () => {
@@ -59,9 +59,9 @@ const AdminHome = () => {
 
     return (
         <div>
-            <h1 className="text-5xl  mt-10 mb-5">Wellcome Home</h1>
+            <DashboardNavbar></DashboardNavbar>
             <div>
-                <div className="stats shadow">
+                <div className="stats shadow mt-10 w-[98%]">
                     <div className="stat bg-[#0088FE]">
                         <div className="stat-figure text-secondary">
                             <div className="stat-value">{data?.revene.toFixed(2)}</div>

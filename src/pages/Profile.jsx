@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MdFreeCancellation } from "react-icons/md";
+import { MdDelete, MdFreeCancellation } from "react-icons/md";
 import Swal from "sweetalert2";
 import UseAuth from "../Hooks/UseAuth";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ const Profile = () => {
         },
         {
           field: 'action', headerName: 'Action', width: 100, renderCell: (params) => (
-              <MdFreeCancellation  className=' text-white text-4xl mt-2 cursor-pointer bg-red-800 rounded-md p-[1px]' />
+              <MdDelete className=' text-white text-4xl mt-2 cursor-pointer bg-red-800 rounded-md p-[1px]' />
           )
       },
     ];

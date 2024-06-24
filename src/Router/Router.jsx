@@ -142,7 +142,7 @@ const Router = createBrowserRouter([
                 loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
             },
             {
-                path: 'dashboard/booking',
+                path: '/dashboard/booking',
                 element: <MangeBoking></MangeBoking>
             }
         ]

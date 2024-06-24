@@ -1,10 +1,10 @@
 import Title from "../../../share/Title";
-
+import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
 
 const MangeBoking = () => {
     return (
         <div>
-            <Title heading={'---MangeBoking-------'} paragraph={'Mange all booking site'}></Title>
+           <DashboardNavbar></DashboardNavbar>
         </div>
     );
 };
