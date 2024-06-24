@@ -9,7 +9,7 @@ const TopBar = () => {
     const email = 'junayetshiblu0@gmail.com';
 
     return (
-        <div className="bg-gray-800 text-white py-2 px-4">
+        <div className="bg-gray-800 text-white py-2 px-2">
             <div className="max-w-[1150px] md:gap-2 gap-0 mx-auto flex justify-between items-center">
                 <div className="flex items-center">
                     <IoMdCall className="md:mr-2 mr-1 text-xs md:text-base" />

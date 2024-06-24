@@ -2,7 +2,6 @@ import ShareBannar from "../../component/ShareBannar";
 import img1 from '../../assets/image/assets/menu/banner3.jpg'
 import Title from "../../share/Title";
 import Shareitem from "../../component/Shareitem";
-import { useState } from "react";
 import useMenu from "../../Hooks/useMenu";
 import dessertimg from '../../../src/assets/image/assets/menu/dessert-bg.jpeg'
 import pizzaimg from '../../../src/assets/image/assets/menu/pizza-bg.jpg'

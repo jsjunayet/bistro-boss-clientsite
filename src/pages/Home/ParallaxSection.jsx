@@ -1,4 +1,4 @@
-import img from '../../../src/assets/image/assets/home/featured.jpg'
+import img from '../../../src/assets/image/assets/home/img1.jpg'
 import Title from '../../share/Title';
 
 const ParallaxSection = () => {

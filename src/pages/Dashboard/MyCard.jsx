@@ -5,8 +5,6 @@ import UseAxois from "../../Hooks/UseAxois";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-
-
 const MyCard = () => {
     const [card, refetch] = UseCardItem()
     const axiosSecure = UseAxois()

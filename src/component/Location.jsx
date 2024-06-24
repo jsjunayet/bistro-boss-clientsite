@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaEnvelope, FaPhone,  FaUserCog } from 'react-icons/fa'
 
 const Location = () => {
     return (
-        <div className='max-w-6xl mx-auto mb-10'>
+        <div className='max-w-6xl mx-auto mb-6'>
             <h1 className={`mb-6 text-xl text-center font-semibold`}>Our Main Branch Location</h1>
             <div className='  md:flex md:flex-row flex flex-col gap-y-5 md:gap-y-0 gap-5'>
 
@@ -13,7 +13,7 @@ const Location = () => {
                         <div className="flex items-center   mb-4">
                             <FaMapMarkerAlt className="mr-2 text-gray-700" />
                             <p className={`text-sm font-semibold `}>Location:</p>
-                            <p className={`ml-2 `}>Shikarpur, Brahmanbaria, Bangladesh</p>
+                            <p className={`ml-2 `}>Kasba, Brahmanbaria, Bangladesh</p>
                         </div>
                         <div className="flex items-center mb-4">
                             <FaEnvelope className="mr-2 text-gray-700" />
@@ -32,10 +32,10 @@ const Location = () => {
                         <p className={`ml-2 `}>Junayet Restaurant Website</p>
                     </div>
                 </div>
-                <div className="flex-1 bg-base-100 md:mx-0 mx-2 border-t-8 border-red-700 shadow-lg px-4 pt-1  rounded-lg h-[300px]">
+                <div className="flex-1 bg-base-100 md:mx-0 mx-2 border-t-8 border-red-700 shadow-lg px-4 pt-1  rounded-lg h-[300px] ">
                     <div className="relative" style={{ paddingTop: '75%' }}>
                         <iframe
-                            className="absolute inset-0 w-full h-[284px] rounded"
+                            className="absolute inset-0 w-full md:h-[284px] h-52 rounded"
                             frameborder="0"
                             scrolling="no"
                             marginheight="0"

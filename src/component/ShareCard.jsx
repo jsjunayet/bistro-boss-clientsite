@@ -46,7 +46,7 @@ const ShareCard = ({ item }) => {
     };
 
     return (
-        <div className="card mx-2   md:mx-0 bg-base-100 shadow-xl flex flex-col md:h-[500px]">
+        <div className="card mx-2 mt-2 md:mt-0  md:mx-0 bg-base-100 shadow-xl flex flex-col md:h-[500px]">
             <div className="overflow-hidden md:h-2/3">
                 <img src={image} alt={name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
             </div>

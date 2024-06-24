@@ -10,10 +10,6 @@ import UsePayment from "../Hooks/UsePayment";
 const Profile = () => {
     const {user}=UseAuth()
     const [paymentuser] = UsePayment()
-    console.log(paymentuser)
-   
-
-
     const total = paymentuser.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.price),0);
     const columns = [
         { field: 'number', headerName: 'Number', width: 100, padding: 5 },
@@ -78,11 +74,11 @@ const Profile = () => {
           <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full'>
             {"USER"}
           </p>
-          <p className='mt-2 text-xl font-medium text-gray-800 '>
+          <p className='mt-2 md:text-xl text-xs font-medium text-gray-800 '>
             User Id: {user?.uid}
           </p>
-          <div className='w-full p-2 mt-4 rounded-lg'>
-            <div className='flex flex-wrap items-center justify-between text-sm text-gray-600 '>
+          <div className='w-full p-2 md:mt-4 mt-0 rounded-lg'>
+            <div className='flex md:space-y-0 space-y-2 flex-wrap items-center justify-between text-sm text-gray-600 '>
               <p className='flex flex-col'>
                 Name
                 <span className='font-bold text-black '>
@@ -103,7 +99,7 @@ const Profile = () => {
               </p>
               </div>
               <div>
-                <button className='bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
+                <button className='bg-[#F43F5E] px-10 py-1 mt-1 md:mt-0 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1'>
                   Update Profile
                 </button>
                 <button className='bg-[#F43F5E] px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]'>
@@ -117,7 +113,7 @@ const Profile = () => {
     </div>         
      </div>
          <div>
-                    <div className={`mx-2 md:mx-0`}>
+                    <div className={`mx-2 md:mx-0 mb-6`}>
                         <div className=' mt-10  max-w-[1240px] mx-auto z-10'>
                             <div style={{ height: 500, width: '100%' }}>
                                 <DataGrid

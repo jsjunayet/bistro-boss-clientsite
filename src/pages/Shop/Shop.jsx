@@ -60,7 +60,7 @@ const Shop = () => {
     return (
         <div>
             <div className="max-w-6xl mx-auto my-10">
-                <div className="text-center mb-4">
+                <div className=" justify-center items-center mb-4 flex flex-col md:flex-row gap-y-4 md:gap-y-0 gap-x-[2px]">
                     <input 
                         type="text" 
                         placeholder="Name Search..." 
@@ -68,9 +68,10 @@ const Shop = () => {
                         onChange={handleSearch} 
                         className="px-4 py-2 border rounded"
                     />
+                    <div>
                     <button 
                         onClick={() => handleSortOrderChange('asc')} 
-                        className={`ml-2 px-4 py-2 border rounded ${sortOrder === 'asc' ? 'bg-gray-300' : ''}`}
+                        className={`md:ml-2 ml-0 px-4 py-2 border rounded ${sortOrder === 'asc' ? 'bg-gray-300' : ''}`}
                     >
                         Low Price
                     </button>
@@ -80,6 +81,7 @@ const Shop = () => {
                     >
                         High Price
                     </button>
+                    </div>
                 </div>
                 <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)} >
                     <div className="text-center">

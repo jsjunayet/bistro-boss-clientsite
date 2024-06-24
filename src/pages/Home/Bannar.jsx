@@ -1,5 +1,5 @@
 
-import img2 from '../../../src/assets/image/assets/home/01.jpg'
+import img2 from '../../../src/assets/image/assets/home/img1.jpg'
 const Bannar = () => {
     return (
         <div className="">

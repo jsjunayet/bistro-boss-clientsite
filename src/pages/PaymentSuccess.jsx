@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import  {  useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { Link, useParams } from 'react-router-dom';
@@ -67,29 +67,31 @@ const PaymentSuccess = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 p-6 text-center">
+    <div className="flex mt-10 md:mt-0 flex-col min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 p-6 text-center">
       <div>
-        <header className="mb-5">
-          <h1 className="text-4xl font-bold text-gray-800">Congratulations!</h1>
+        <header className="md:mb-5 mb-2">
+          <h1 className="md:text-4xl text-2xl font-bold text-gray-800">Congratulations!</h1>
         </header>
         <main id="congrats-content" className="flex flex-col flex-1 items-center justify-center">
-          <div className="mb-8">
-            <h2 className="text-3xl font-semibold text-green-600">Payment Successful</h2>
-            <p className="mt-4 text-lg text-gray-700">Thank you for your payment. Your transaction has been completed successfully.</p>
-            <p className="mt-2 text-lg text-gray-700">We appreciate your business and hope you enjoy our services.</p>
+          <div className="md:mb-8 mb-3">
+            <h2 className="md:text-3xl text-xl font-semibold text-green-600">Payment Successful</h2>
+            <p className="mt-4 md:text-lg text-sm text-gray-700">Thank you for your payment. Your transaction has been completed successfully.</p>
+            <p className="mt-2 md:text-lg text-sm text-gray-700">We appreciate your business and hope you enjoy our services.</p>
           </div>
-          <div className="flex space-x-4">
+          <div className=" md:flex-row flex flex-col space-y-3 md:space-x-4">
             <button
-              className="px-6 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition duration-300"
+              className="px-6 py-2 bg-green-600 text-white  font-semibold rounded hover:bg-green-700 transition duration-300"
               onClick={() => window.location.href = '/'}
             >
               Go to Home
             </button>
+           
             <Link to={'/profile'}>
               <button className="px-6 py-2 bg-gray-200 text-gray-800 font-semibold rounded hover:bg-gray-300 transition duration-300">
                 View Profile
               </button>
             </Link>
+          
             <button
               className="px-6 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300"
               onClick={downloadPDF}

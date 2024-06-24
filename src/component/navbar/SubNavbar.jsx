@@ -126,16 +126,7 @@ const SubNavbar = () => {
                                         <Link onClick={handlesingout}>LogOut</Link>
                                     </li>
                                 ) : (
-                                    <li>
-                                        <NavLink
-                                            to="/login"
-                                            className={({ isActive, isPending }) =>
-                                                isPending ? "pending" : isActive ? " border-b-2 border-gray-400" : ""
-                                            }
-                                        >
-                                            Login
-                                        </NavLink>
-                                    </li>
+                                <li><Link to={"/login"}>Login</Link></li>
                                 )}
                             </ul>
                         </div>
