@@ -3,20 +3,31 @@ import { VscPreview } from "react-icons/vsc";
 import { IoMenu } from "react-icons/io5";
 import { IoIosContacts } from "react-icons/io";
 import { FaBagShopping, FaBook, FaCalendar, FaCartArrowDown, FaPaypal, FaUsers, FaUtensils } from "react-icons/fa6";
-import UseCardItem from "../../Hooks/UseCarditem/UseCardItem";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoStatsChartSharp } from "react-icons/io5";
+import { IoIosNotifications } from "react-icons/io";
+
 import UseAdmin from "../../Hooks/UseAdmin";
+import { IoMdLogOut } from "react-icons/io";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import UseAuth from "../../Hooks/UseAuth";
+import UseCardItem from "../../Hooks/UseCarditem/UseCardItem";
 
 const Dashboard = () => {
     const location = useLocation();
     const page = location.pathname.includes('/dashboard/mycart');
     const [card] = UseCardItem();
     const [isAdmin] = UseAdmin();
-    console.log(isAdmin);
-
+    const { user, logOut } = UseAuth();
+    const handlesingout = () => {
+        logOut()
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
     const navLinkClass = ({ isActive }) =>
         `flex gap-2 items-center mx-4 rounded uppercase text-base ${isActive ? ' bg-red-700 p-1' : ''}`;
 
@@ -48,15 +59,16 @@ const Dashboard = () => {
                     )}
                     <hr className="mx-5" />
                     <p className="title mx-5">USEFUL</p>
-                    <NavLink className={navLinkClass} to="/dashboard/stats"><InsertChartIcon /> Stats</NavLink>
-                    <NavLink className={navLinkClass} to="/dashboard/notifications"><NotificationsNoneIcon /> Notifications</NavLink>
-                    <NavLink className={navLinkClass} to="/dashboard/settings"><SettingsApplicationsIcon /> Setting</NavLink>
+                    <button className="flex hover:text-red-700 gap-2 items-center mx-4 rounded uppercase text-base"><IoStatsChartSharp/> Stats</button>
+                    <button className="flex hover:text-red-700 gap-2 items-center mx-4 rounded uppercase text-base"><IoIosNotifications /> Notifications</button>
+                    <button className="flex hover:text-red-700 gap-2 items-center mx-4 rounded uppercase text-base"><IoSettingsOutline /> Setting</button>
                     <hr className="mx-5" />
                     <p className="title mx-5">USER</p>
                     <NavLink className={navLinkClass} to="/"><FaHome /> Home</NavLink>
-                    <NavLink className={navLinkClass} to="/menu"><IoMenu /> Menu</NavLink>
-                    <NavLink className={navLinkClass} to="/shop"><FaBagShopping /> Shop</NavLink>
-                    <NavLink className={navLinkClass} to="/contact"><IoIosContacts /> Contact</NavLink>
+                    <NavLink className={navLinkClass} to="/profile"><IoMenu /> Profile</NavLink>
+                    <NavLink className={navLinkClass} to="/card"><FaBagShopping />Card</NavLink>
+                    <hr className="mx-5" />
+                    <button onClick={handlesingout} className="flex hover:text-red-700 gap-2 items-center mx-4 rounded uppercase text-base"><IoMdLogOut />Logout</button>
                 </div>
             </div>
             <div className="col-span-5">

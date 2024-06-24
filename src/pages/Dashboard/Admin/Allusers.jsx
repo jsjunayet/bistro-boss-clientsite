@@ -4,6 +4,7 @@ import { FaTrash, FaUser } from "react-icons/fa6";
 import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
 import { MdDelete } from "react-icons/md";
 import { DataGrid } from "@mui/x-data-grid";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const AllUsers = () => {
     const axiosSecure = useAxios();

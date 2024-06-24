@@ -7,12 +7,15 @@ import { axiosSecure } from "../../../Hooks/UseAxois";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
-
+import { Pagination, TextField, Button } from "@mui/material";
 
 const ManageItem = () => {
-    const [visibleItems, setVisibleItems] = useState(10);
-    const [menu, refetch] = useMenu()
-    const handledelte = (_id) => {
+    const [menu, refetch] = useMenu();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filterText, setFilterText] = useState("");
+    const itemsPerPage = 5;
+
+    const handleDelete = async (_id) => {
         console.log(_id);
 
         Swal.fire({
@@ -23,43 +26,49 @@ const ManageItem = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-                const res = axiosSecure.delete(`/menus/${_id}`)
+                const res = await axiosSecure.delete(`/menus/${_id}`);
                 if (res.data.deletedCount > 0) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success"
-                    });
-                    refetch()
+                    refetch();
                 }
-
             }
         });
-
-    }
-    const handleLoadMore = () => {
-        // Increase the number of visible items, e.g., by 10
-        setVisibleItems(menu.length);
     };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const handleFilterChange = (event) => {
+        setFilterText(event.target.value);
+        setCurrentPage(1); // Reset to the first page on filter change
+    };
+
+    const paginate = (items) => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return items.slice(startIndex, startIndex + itemsPerPage);
+    };
+
+    const filteredMenu = menu.filter(item =>
+        item.name.toLowerCase().includes(filterText.toLowerCase())
+    );
+
+    const paginatedMenu = paginate(filteredMenu);
+
     return (
         <div>
             <div className="">
                 <DashboardNavbar></DashboardNavbar>
             </div>
             <div>
-                <p className="my-4 text-2xl font-semibold">Total items: {menu.length}</p>
+                <p className="mb-2 text-2xl font-semibold">Total items: {menu.length}</p>
+                <div className="mb-4 flex justify-between">
+                </div>
                 <div className="overflow-x-auto">
                     <table className="table">
-                        {/* head */}
                         <thead className="mr-20">
-                            <tr className="bg-[#D1A054] p-2 ">
+                            <tr className="bg-red-700 p-2 text-white">
                                 <th></th>
                                 <th>ITEM IMAGE</th>
                                 <th>ITEM NAME</th>
@@ -68,12 +77,13 @@ const ManageItem = () => {
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        {
-                            menu.slice(0, visibleItems).map((item, index) => <tbody key={item._id}>
-                                {/* row 1 */}
+                        {paginatedMenu.map((item, index) => (
+                            <tbody key={item._id}>
                                 <tr>
-                                    <th>{index + 1}</th>
-                                    <th><img src={item.image} alt="" className="w-20 h-16 rounded-xl" /></th>
+                                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                                    <th>
+                                        <img src={item.image} alt="" className="w-20 h-16 rounded-xl" />
+                                    </th>
                                     <td>{item.name}</td>
                                     <td>{item.price}</td>
                                     <td>
@@ -82,21 +92,22 @@ const ManageItem = () => {
                                         </Link>
                                     </td>
                                     <td>
-                                        <button onClick={() => handledelte(item._id)} className="btn btn-group">
+                                        <button onClick={() => handleDelete(item._id)} className="btn btn-group">
                                             <FaTrash className="text-2xl"></FaTrash>
                                         </button>
                                     </td>
-
                                 </tr>
-                                {/* row 2 */}
-
-                                {/* row 3 */}
-
-                            </tbody>)
-
-                        }
-                        <button onClick={handleLoadMore}>Load More</button>
+                            </tbody>
+                        ))}
                     </table>
+                    <div className="my-2 flex justify-center items-center">
+                        <Pagination
+                            count={Math.ceil(filteredMenu.length / itemsPerPage)}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            color="primary"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -17,3 +17,15 @@ const UsePayment = () => {
 };
 
 export default UsePayment;
+
+export const AllUsePayment = () => {
+    const { data: Allpaymentuser = [] } = useQuery({
+        queryKey: ['allpaymentEmail',],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/payments`)
+            return res.data
+        },
+
+    })
+    return [Allpaymentuser]
+};

@@ -17,7 +17,7 @@ const useMenu = () => {
     //         })
     // }, [])
     // return [menu, loading]
-    const { data: menu = [], isPending: loading, refetch } = useQuery({
+    const { data: menu = [], isFetching: loading, refetch } = useQuery({
         queryKey: ['menu'],
         queryFn: async () => {
             const res = await axiosSecure.get('/menu')
