@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Title from "../../../share/Title";
 import UseaxiosPublic from "../../../Hooks/UseaxiosPublic";
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const UpdateItem = () => {
@@ -9,6 +10,7 @@ const UpdateItem = () => {
     const imgapi = (`https://api.imgbb.com/1/upload?key=${imgbb}`)
     const axiosPublic = UseaxiosPublic()
     const { _id, recipe, price, name, category, image } = useLoaderData()
+    console.log(category)
 
     const { register, handleSubmit } = useForm()
     const onSubmit = (data) => {
@@ -29,11 +31,21 @@ const UpdateItem = () => {
                         image: res.data.data.display_url,
                         price: parseInt(data.price)
                     }
-                    console.log(useritem)
-                    console.log(_id);
                     axiosPublic.patch(`/update/${_id}`, useritem)
                         .then(res => {
-                            console.log(res.data);
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "UPDATE ITEM",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            });
                         })
                 }
             })
@@ -60,13 +72,13 @@ const UpdateItem = () => {
                                 <span className="label-text">Category*</span>
 
                             </label>
-                            <select  {...register("category")} className="select select-bordered ">
-                                <option disabled selected>please seleted the category</option>
-                                <option value={'dessert'}>dessert</option>
-                                <option value={'drinks'}>drinks</option>
-                                <option value={'soup'}>soup</option>
-                                <option value={'pizza'}>pizza</option>
-                                <option value={'salad'}>salad</option>
+                            <select {...register("category")} className="select select-bordered" defaultValue={category}>
+                                <option value="" disabled>Select category</option>
+                                <option value="dessert" selected={category === "dessert"}>dessert</option>
+                                <option value="drinks" selected={category === "drinks"}>drinks</option>
+                                <option value="soup" selected={category === "soup"}>soup</option>
+                                <option value="pizza" selected={category === "pizza"}>pizza</option>
+                                <option value="salad" selected={category === "salad"}>salad</option>
                             </select>
                         </div>
                         <div className="form-control w-1/2">

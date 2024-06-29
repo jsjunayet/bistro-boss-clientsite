@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthControl } from '../../Auth/AuthProvider';
 import UseaxiosPublic from '../../Hooks/UseaxiosPublic';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const useFormValidation = () => {
   const [formData, setFormData] = useState({
@@ -52,10 +54,11 @@ const Login = () => {
     if (validateForm()) {
         login(email, password)
             .then(result => {
+              Swal.fire("Successfully Login...");
                 navigate('/')
             })
             .catch(error => {
-                console.log(error.message)
+              Swal.fire(`${error.message}`);
             })
       setFormData({
         email: '',
@@ -65,7 +68,8 @@ const Login = () => {
       
     } else {
         setloading(false)
-      console.log('Form has validation errors. Please fix them.');
+        Swal.fire("Form has validation errors");
+
     }
   };
 
@@ -92,12 +96,13 @@ const Login = () => {
           .then(res => {
             console.log(res.data);
             navigate('/');
+            Swal.fire("Successfully Login...");
             setloadings(false)
           });
       })
       .catch(error => {
         setloadings(false)
-        console.log(error.message);
+        Swal.fire(`${error.message}`);
       });
   };
 

@@ -7,8 +7,16 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import UseAuth from "../../../Hooks/UseAuth";
 import img from '../../../assets/image/assets/home/placeholder.jpg';
-const DashboardNavbar = () => {
+const DashboardNavbar = ({serarch,setcount}) => {
     const {user} = UseAuth();
+    const handleFilterChange = (event) => {
+      if(serarch && setcount){
+        serarch(event.target.value);
+      setcount(1);
+      }else{
+        serarch(event.target.value)
+      }
+  };
   return (
     <div className="h-16 border-b mb-2 border-gray-300 flex items-center text-sm text-gray-500">
       <div className="w-full px-4 flex items-center justify-between">
@@ -18,14 +26,17 @@ const DashboardNavbar = () => {
               type="text"
               placeholder="Search..."
               className="outline-none border-none bg-transparent mr-2"
+              onChange={handleFilterChange}
             />
             <SearchOutlinedIcon />
           </div>
         </div>
         <div className="flex items-center">
+          <div className=" hidden md:block">
           <div className="flex items-center mr-4">
             <LanguageOutlinedIcon className="mr-1" />
             English
+          </div>
           </div>
           <DarkModeOutlinedIcon
             className="mr-4 cursor-pointer"
@@ -45,9 +56,11 @@ const DashboardNavbar = () => {
             </div>
           </div>
           <ListOutlinedIcon className="mr-4" />
+          <div className="hidden md:block">
           <div className="flex items-center">
           {user ? <img className="w-8 h-8 rounded-full" src={user?.photoURL} /> : <img className="w-8 h-8 rounded-full" src={img} alt="" />}
 
+          </div>
           </div>
         </div>
       </div>

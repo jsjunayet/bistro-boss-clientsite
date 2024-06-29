@@ -19,11 +19,17 @@ const ShareCard = ({ item }) => {
                 .then(res => {
                     if (res.data.insertedId) {
                         Swal.fire({
-                            position: "center",
+                            toast: true,
+                            position: "top-end", // or any position you prefer
                             icon: "success",
                             title: "Item added to cart",
-                            showConfirmButton: true,
-                            timer: 1500
+                            showConfirmButton: false,
+                            timer: 1500, // Lowered timer for faster notification
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
                         });
                         refetch();
                     }

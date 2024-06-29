@@ -10,7 +10,10 @@ import UseCardItem from "../../Hooks/UseCarditem/UseCardItem";
 import { useQuery } from "@tanstack/react-query";
 import { axiosSecure } from "../../Hooks/UseAxois";
 import { FaCartShopping } from "react-icons/fa6";
-import TopBar from "./TopBar"; // Import the TopBar component
+import TopBar from "./TopBar";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const SubNavbar = () => {
     const { user, logOut } = UseAuth();
@@ -25,10 +28,11 @@ const SubNavbar = () => {
     const handlesingout = () => {
         logOut()
             .then(result => {
-                console.log(result);
+                Swal.fire("Successfully Resistor");
             })
             .catch(error => {
-                console.log(error);
+                Swal.fire(`${error.message}`);
+
             });
     };
     const Links = [

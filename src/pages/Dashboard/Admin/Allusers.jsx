@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../Hooks/UseAxois";
-import { FaTrash, FaUser } from "react-icons/fa6";
 import DashboardNavbar from "../DashbaordComponent/DashboardNavbar";
 import { MdDelete } from "react-icons/md";
 import { DataGrid } from "@mui/x-data-grid";
-import UseAuth from "../../../Hooks/UseAuth";
-
+import Swal from "sweetalert2";
+import { useState } from "react";
 const AllUsers = () => {
     const axiosSecure = useAxios();
+    const [filterText, setFilterText] = useState("");
+
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
@@ -15,8 +16,9 @@ const AllUsers = () => {
             return res.data;
         }
     });
-
-    const rows = users.map((item, index) => ({
+    const filteruser = users.filter((item)=>
+        item.name.toLowerCase().includes(filterText.toLowerCase()))
+    const rows = filteruser.map((item, index) => ({
         id: index + 1,
         userId: item._id,  // Adding the actual user ID for API calls
         number: index + 1,
@@ -58,24 +60,75 @@ const AllUsers = () => {
             .then(res => {
                 if (res.data?.deletedCount > 0) {
                     refetch();
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "DELETED USER",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: `${err.message}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            });
     }
 
     const handleAdmin = async (_id) => {
         try {
             const res = await axiosSecure.patch(`/users/admin/${_id}`);
-            console.log(res);
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "USER TO Admin",
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
             refetch();
         } catch (err) {
-            console.error(err);
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: `${err.message}`,
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
         }
     }
 
     return (
         <div>
-            <DashboardNavbar />
+            <DashboardNavbar serarch={setFilterText} />
             <div className="font-semibold text-xl">
                 <h1 className="text-xl uppercase font-semibold my-2">Total Users: {users?.length}</h1>
             </div>

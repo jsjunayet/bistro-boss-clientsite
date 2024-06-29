@@ -5,6 +5,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, PieChart, Pie, Sector
 
 import { BsCalendarEventFill } from "react-icons/bs";
 import DashboardNavbar from "./DashbaordComponent/DashboardNavbar";
+import Title from "../../share/Title";
 
 
 
@@ -60,8 +61,9 @@ const AdminHome = () => {
     return (
         <div>
             <DashboardNavbar></DashboardNavbar>
+            <Title heading={"---WELCOME---"} paragraph={"Admin Dashbaord"}></Title>
             <div>
-                <div className="stats shadow mt-10 w-[98%]">
+                <div className="stats shadow mt-5 w-[98%]">
                     <div className="stat bg-[#0088FE]">
                         <div className="stat-figure text-secondary">
                             <div className="stat-value">{data?.revene.toFixed(2)}</div>
@@ -95,7 +97,7 @@ const AdminHome = () => {
 
                 </div>
             </div>
-            <div className="my-10 flex ">
+            <div className="my-5 flex md:flex-row flex-col ">
                 <div className="w-1/2">
                     <BarChart
                         width={500}

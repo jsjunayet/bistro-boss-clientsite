@@ -18,29 +18,24 @@ const Cart = () => {
   const [postalCode, setPostalCode] = useState('');
   const [card, refetch] = UseCardItem();
   const handledelte = (_id) => {
-
-    console.log(_id)
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
             axiosSecure.delete(`/card/${_id}`)
                 .then(res => {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success"
-                    });
                     refetch()
+                    Swal.fire({
+                      toast: true,
+                      position: "top-end",
+                      icon: "success",
+                      title: "Item Deleted to cart",
+                      showConfirmButton: false,
+                      timer: 1000, 
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                  });
                 })
-        }
-    });
+   
 }
   // Function to calculate total price
   const totalPrice = card.reduce((total, item) => total + item.price * (item.quantity || 1), 0);

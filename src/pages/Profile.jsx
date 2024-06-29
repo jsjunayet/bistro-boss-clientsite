@@ -2,11 +2,13 @@ import { MdDelete } from "react-icons/md";
 import UseAuth from "../Hooks/UseAuth";
 import { DataGrid } from '@mui/x-data-grid';
 import UsePayment from "../Hooks/UsePayment";
+import { axiosSecure } from "../Hooks/UseAxois";
+import Swal from "sweetalert2";
 
 
 const Profile = () => {
     const {user}=UseAuth()
-    const [paymentuser] = UsePayment()
+    const [paymentuser,refetch] = UsePayment()
     const total = paymentuser.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.price),0);
     const columns = [
         { field: 'number', headerName: 'Number', width: 100, padding: 5 },
@@ -18,15 +20,59 @@ const Profile = () => {
         { field: 'price', headerName: 'Price', width: 100 },
         {
             field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
-                <p>pending</p>
-            )
+              <p onClick={() => handlePanding(params.row._id)} className=" text-white text-xs mt-3 cursor-pointer bg-[#333]  rounded-md px-3 py-2">{params.row.status}</p>            )
         },
-        {
-          field: 'action', headerName: 'Action', width: 100, renderCell: (params) => (
-              <MdDelete className=' text-white text-4xl mt-2 cursor-pointer bg-red-800 rounded-md p-[1px]' />
-          )
-      },
+       
     ];
+    const handlePanding = async(id)=>{
+    try{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "This is the food You have received!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "delivered"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await  axiosSecure.patch(`/update/panding/${id}`)
+          if(res.data.modifiedCount>0){
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              icon: "success",
+              title:`Succefull delivered`,
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+          });
+          refetch()
+          }      
+        }
+    });
+
+    }catch(err){
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Our Food already delivered",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    }
+    }
 
     const rows = paymentuser.map((item, index) => ({
       
@@ -37,9 +83,8 @@ const Profile = () => {
         location: item.address,
         phone:item?.phone,
         date: item.date.substring(0, 10),
-        price: item.price,
-        action: 'Cancel',
-        status: 'status',
+        price: `${item.price}$`,
+        status: item.status,
         _id: item._id,
     }));
 
@@ -92,7 +137,7 @@ const Profile = () => {
                 <span className='font-bold text-black '>{paymentuser?.length}</span>
               </p>
               <p className='flex gap-1'>
-                Total Buy : <spam className="font-bold"> {total}</spam>
+                Total Buy : <spam className="font-bold"> {total}$</spam>
               </p>
               </div>
               <div>

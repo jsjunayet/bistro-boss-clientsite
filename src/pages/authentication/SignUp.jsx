@@ -6,6 +6,7 @@ import UseaxiosPublic from '../../Hooks/UseaxiosPublic';
 import { AuthControl } from '../../Auth/AuthProvider';
 import { imgbbupload } from '../../Hooks/utilies';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import Swal from 'sweetalert2';
 
 const useFormValidation = () => {
   const [formData, setFormData] = useState({
@@ -42,8 +43,8 @@ const useFormValidation = () => {
 };
 
 const SignUp = () => {
-    const [loading, setloading]= useState(false)
-    const [loadings, setloadings]= useState(false)
+  const [loading, setLoading] = useState(false);
+  const [loadings, setLoadings] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -53,7 +54,7 @@ const SignUp = () => {
   const axiosPublic = UseaxiosPublic();
 
   const handleSubmit = async (e) => {
-    setloading(true)
+    setLoading(true);
     e.preventDefault();
     if (validateForm()) {
       console.log('Form submitted with data:', formData);
@@ -74,18 +75,22 @@ const SignUp = () => {
               axiosPublic.post('/users', userinfo)
                 .then(res => {
                   if (res.data.insertedId) {
-                    alert('Successfully added');
+                    console.log(res.data.insertedId)
                   }
                 });
               navigate('/');
+              Swal.fire("Successfully Resistor...");
+
+
             })
-            .catch(() => {
-              console.log('Error updating profile');
+            .catch((error) => {
+              Swal.fire(`${error.message}`);
+
             });
         })
         .catch(error => {
-            setloading(false)
-          console.log(error.message);
+          setLoading(false);
+          Swal.fire(`${error.message}`);
         });
       setFormData({
         name: '',
@@ -95,13 +100,14 @@ const SignUp = () => {
       });
       setSelectedImage(null);
     } else {
-        setloading(false)
-      console.log('Form has validation errors. Please fix them.');
+      setLoading(false);
+      Swal.fire("Form has validation errors");
+
     }
   };
 
   const handleGoogleSignIn = () => {
-    setloadings(true)
+    setLoadings(true);
     googlelogin()
       .then(result => {
         console.log(result.user);
@@ -113,12 +119,15 @@ const SignUp = () => {
         };
         axiosPublic.post('/users', userinfo)
           .then(res => {
-            setloadings(false)
+            setLoadings(false);
             navigate('/');
+            Swal.fire("Successfully Resistor...");
+
           });
       })
       .catch(error => {
-        setloadings(false)
+        setLoadings(false);
+        Swal.fire(`${error.message}`);
       });
   };
 
@@ -207,9 +216,7 @@ const SignUp = () => {
             disabled={loading}
             className="w-full bg-black text-white py-2 px-4 rounded hover:bg-blue-800"
           >
-             {
-                loading? <TbFidgetSpinner className=' animate-spin mx-auto' />: "REGISTER"
-            }
+            {loading ? <TbFidgetSpinner className='animate-spin mx-auto' /> : "REGISTER"}
           </button>
         </form>
 
@@ -218,7 +225,7 @@ const SignUp = () => {
             onClick={handleGoogleSignIn}
             className="flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
           >
-            <FcGoogle className="mr-2" /> {loadings?<TbFidgetSpinner className=' animate-spin mx-auto' />:"Sign in with Google"}
+            <FcGoogle className="mr-2" /> {loadings ? <TbFidgetSpinner className='animate-spin mx-auto' /> : "Sign in with Google"}
           </button>
           <Link
             to='/login'

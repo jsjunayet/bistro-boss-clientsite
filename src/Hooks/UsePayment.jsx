@@ -5,7 +5,7 @@ import { axiosSecure } from "./UseAxois";
 
 const UsePayment = () => {
     const { user } = UseAuth()
-    const { data: paymentuser = [] } = useQuery({
+    const { data: paymentuser = [],refetch } = useQuery({
         queryKey: ['paymentEmail', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/payment/${user?.email}`)
@@ -13,13 +13,13 @@ const UsePayment = () => {
         },
 
     })
-    return [paymentuser]
+    return [paymentuser,refetch]
 };
 
 export default UsePayment;
 
 export const AllUsePayment = () => {
-    const { data: Allpaymentuser = [] } = useQuery({
+    const { data: Allpaymentuser = [],refetch } = useQuery({
         queryKey: ['allpaymentEmail',],
         queryFn: async () => {
             const res = await axiosSecure.get(`/payments`)
@@ -27,5 +27,5 @@ export const AllUsePayment = () => {
         },
 
     })
-    return [Allpaymentuser]
+    return [Allpaymentuser,refetch]
 };

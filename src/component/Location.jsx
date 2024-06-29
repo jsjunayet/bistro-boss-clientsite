@@ -10,25 +10,25 @@ const Location = () => {
 
                 <div className=' mx-2 lg:p-8 lg:pb-10 border- border-t-8  shadow-md bg-base-100 border-red-700 md:mx-0   p-4  rounded-lg'>
                     <div className='md:mt-10 mt-5'>
-                        <div className="flex items-center   mb-4">
+                        <div className="flex md:text-sm text-xs items-center   mb-4">
                             <FaMapMarkerAlt className="mr-2 text-gray-700" />
-                            <p className={`text-sm font-semibold `}>Location:</p>
+                            <p className={` font-semibold `}>Location:</p>
                             <p className={`ml-2 `}>Kasba, Brahmanbaria, Bangladesh</p>
                         </div>
-                        <div className="flex items-center mb-4">
+                        <div className="flex md:text-sm text-xs items-center mb-4">
                             <FaEnvelope className="mr-2 text-gray-700" />
-                            <p className={`text-sm font-semibold `}>Email:</p>
+                            <p className={` font-semibold `}>Email:</p>
                             <p className={`ml-2 `}>info@online_food.com</p>
                         </div>
-                        <div className="flex items-center mb-4">
+                        <div className="flex md:text-sm text-xs items-center mb-4">
                             <FaPhone className="mr-2 text-gray-700" />
-                            <p className={`text-sm font-semibold `}>Call:</p>
+                            <p className={` font-semibold `}>Call:</p>
                             <p className={`ml-2 `}>+880164001818</p>
                         </div>
                     </div>
-                    <div className="flex items-center mb-4">
+                    <div className="flex md:text-sm text-xs items-center mb-4">
                         <FaUserCog className="mr-2 text-gray-700" />
-                        <p className={`text-sm font-semibold `}>Website Type:</p>
+                        <p className={` font-semibold `}>Website Type:</p>
                         <p className={`ml-2 `}>Junayet Restaurant Website</p>
                     </div>
                 </div>

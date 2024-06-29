@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Title from "../../../share/Title";
 import UseaxiosPublic from "../../../Hooks/UseaxiosPublic";
-import axios from "axios";
+import Swal from "sweetalert2";
 
 const Additem = () => {
     const imgbb = import.meta.env.VITE_IMG_API_KEY;
@@ -17,7 +17,6 @@ const Additem = () => {
             }
         })
             .then(res => {
-
                 if (res.data.success) {
                     const useritem = {
                         name: data.name,
@@ -28,7 +27,19 @@ const Additem = () => {
                     }
                     axiosPublic.post('/menu', useritem)
                         .then(res => {
-                            console.log(res.data);
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "SUCCESSFULLY ITEM ADD",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            });
                         })
                 }
             })

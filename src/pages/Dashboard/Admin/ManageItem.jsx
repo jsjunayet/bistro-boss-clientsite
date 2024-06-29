@@ -40,10 +40,7 @@ const ManageItem = () => {
         setCurrentPage(value);
     };
 
-    const handleFilterChange = (event) => {
-        setFilterText(event.target.value);
-        setCurrentPage(1); // Reset to the first page on filter change
-    };
+    
 
     const paginate = (items) => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -59,11 +56,11 @@ const ManageItem = () => {
     return (
         <div>
             <div className="">
-                <DashboardNavbar></DashboardNavbar>
+                <DashboardNavbar serarch={setFilterText} setcount={setCurrentPage}></DashboardNavbar>
             </div>
             <div>
                 <p className="mb-2 text-2xl font-semibold">Total items: {menu.length}</p>
-                <div className="mb-4 flex justify-between">
+                <div className="mb-2 flex justify-between">
                 </div>
                 <div className="overflow-x-auto">
                     <table className="table">
@@ -85,7 +82,7 @@ const ManageItem = () => {
                                         <img src={item.image} alt="" className="w-20 h-16 rounded-xl" />
                                     </th>
                                     <td>{item.name}</td>
-                                    <td>{item.price}</td>
+                                    <td>{item.price}$</td>
                                     <td>
                                         <Link to={`/dashboard/update/${item._id}`} className="btn btn-ghost">
                                             <FaEdit className="text-2xl"></FaEdit>
